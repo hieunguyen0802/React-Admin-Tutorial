@@ -1,35 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Admin, Resource } from "react-admin";
+import jsonServerProvider from "ra-data-json-server";
+import { PosterList } from "../components/Poster/PosterList";
+import { PosterEdit } from "../components/Poster/PosterEdit";
+import { PosterCreate } from "../components/Poster/PosterCreate";
+import { CategoryList } from "../components/Category/CategoryList";
+import { CategoryEdit } from "../components/Category/CategoryEdit";
+import { CategoryCreate } from "../components/Category/CategoryCreate";
 
-function App() {
-  const [count, setCount] = useState(0)
+const dataProvider = jsonServerProvider("http://localhost:2000");
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const App = () => (
+  <Admin dataProvider={dataProvider}>
+    <Resource name="posters" list ={PosterList} edit={PosterEdit} create={PosterCreate} />
+    <Resource name="categories" list ={CategoryList} edit={CategoryEdit} create={CategoryCreate} recordRepresentation="name" />
+  </Admin>
+);
 
-export default App
+export default App;
